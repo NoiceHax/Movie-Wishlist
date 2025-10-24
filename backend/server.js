@@ -16,8 +16,37 @@ console.log('Environment:', {
 });
 
 const app = express();
-// Enable CORS for all routes
-app.use(cors());
+
+// Configure CORS
+// Allow list can be provided via env var ALLOWED_ORIGINS (comma-separated)
+// or CLIENT_URL for a single origin. We also include common localhost dev ports.
+const allowedFromEnv = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL || '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
+
+const defaultAllowed = [
+  'https://moviewishlist.vercel.app',
+  'http://localhost:5173', // Vite dev
+  'http://localhost:3000',
+  'http://localhost:5000',
+];
+
+const allowedOrigins = Array.from(new Set([...allowedFromEnv, ...defaultAllowed]));
+
+console.log('CORS allowed origins:', allowedOrigins);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow non-browser requests like curl/postman with no origin
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS policy: This origin is not allowed'));
+  },
+  credentials: true,
+}));
 
 app.use(express.json());
 
