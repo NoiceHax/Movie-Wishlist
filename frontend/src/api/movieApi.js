@@ -1,12 +1,8 @@
 import axios from "axios";
-
-// Use Vite environment variable VITE_API_URL when provided (for production)
-// otherwise fall back to the relative '/api' path which works with Vite's dev proxy.
 const baseURL = import.meta.env.VITE_API_URL || '/api';
 
 const API = axios.create({
-  baseURL: 'https://movie-wishlist-39p5.onrender.com/api',
-  headers: { "Content-Type": "application/json" },
+  baseURL: 'https://movie-wishlist-39p5.onrender.com/api',  headers: { "Content-Type": "application/json" },
 });
 
 

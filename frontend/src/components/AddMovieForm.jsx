@@ -1,43 +1,47 @@
 import React, { useState } from "react";
-import * as movieApi from "../api/movieApi.js";
 
 export default function AddMovieForm({ onAdd }) {
   const [title, setTitle] = useState("");
   const [year, setYear] = useState("");
 
-    const submit = async (e) => {
-  e.preventDefault();
-  if (!title) return;
-  try {
-    const newMovie = await movieApi.addMovie({ title, year });
-    // notify parent so it can update its list immediately
-    if (onAdd) onAdd(newMovie);
-    setTitle("");
-    setYear("");
-  } catch (err) {
-    console.error(err);
-    alert("Failed to add movie");
-  }
-};
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const success = onAdd({ title, year });
+    if (success) {
+      // Only clear form if addition was successful
+      setTitle("");
+      setYear("");
+    }
+  };
 
   return (
-    <form onSubmit={submit}>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Enter movie title"
-        required
-      />
-      <input
-        type="text"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-        placeholder="Enter movie year"
-        required
-      />
-      <button type="submit">Add</button>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Movie title"
+          className="w-full p-2 rounded bg-gray-800 border border-gray-700"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="number"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          placeholder="Year"
+          className="w-full p-2 rounded bg-gray-800 border border-gray-700"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded"
+      >
+        Add Movie
+      </button>
     </form>
   );
 }
