@@ -1,12 +1,26 @@
 import axios from "axios";
-const baseURL = import.meta.env.VITE_API_URL || '/api';
 
 const API = axios.create({
-  baseURL: 'https://movie-wishlist-39p5.onrender.com/api',  headers: { "Content-Type": "application/json" },
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  headers: { "Content-Type": "application/json" },
 });
 
+export const getWishlist = async () => {
+  const res = await API.get("/movies");
+  return res.data;
+};
 
-export const getWishlist = () => API.get("/movies").then((res) => res.data);
-export const addMovie = (movie) => API.post("/movies", movie).then((res) => res.data);
-export const deleteMovie = (id) => API.delete(`/movies/${id}`);
-export const toggleWatched = (id) => API.patch(`/movies/${id}`);
+export const addMovie = async (movie) => {
+  const res = await API.post("/movies", movie);
+  return res.data;
+};
+
+export const deleteMovie = async (id) => {
+  const res = await API.delete(`/movies/${id}`);
+  return res.data;
+};
+
+export const toggleWatched = async (id) => {
+  const res = await API.patch(`/movies/${id}`);
+  return res.data;
+};
