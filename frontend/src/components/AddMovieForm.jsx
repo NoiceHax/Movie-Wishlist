@@ -41,14 +41,6 @@ export default function AddMovieForm({ onAdd }) {
         className="w-full p-2 rounded bg-gray-800 border border-gray-700"
         required
       />
-      <input
-        type="number"
-        value={year}
-        onChange={(e) => setYear(e.target.value)}
-        placeholder="Release year"
-        className="w-full p-2 rounded bg-gray-800 border border-gray-700"
-        required
-      />
       <button
         type="submit"
         className="w-full py-2 bg-purple-600 hover:bg-purple-700 rounded disabled:opacity-50"
