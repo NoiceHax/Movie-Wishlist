@@ -24,7 +24,7 @@ const allowedFromEnv = (process.env.ALLOWED_ORIGINS || process.env.CLIENT_URL ||
   .filter(Boolean);
 
 const defaultAllowed = [
-  'https://moviewishlist.vercel.app',
+  'https://movie.noicehax.dev',
   'http://localhost:5173',
   'http://localhost:3000',
 ];
